@@ -11,8 +11,8 @@ module mod_global
     integer :: i, info, seedsize, root, info
 !    integer :: rank
     integer(mk) :: rank, size, ilen, ierror
-    real(mk) :: t1, t2, delta_t, wall_time
-    character(len=256) :: name
+    real(mk) :: t1, t2, delta_t, wall_time, total_time
+    character(len=256) :: name, filename
     !integer(mk) :: MPI_DOUBLE_PRECISION
 
 end module mod_global

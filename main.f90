@@ -50,35 +50,49 @@ program main
         endif             
 
     enddo
+             ! end the time measurement
+     t2 = MPI_Wtime()
+     ! time for each process
+     delta_t = t2 - t1
+     
 
     root = 0 ! where should it be reduced
     call MPI_Reduce(n_circle, n_in, 1, MPI_DOUBLE_PRECISION, MPI_SUM, &
      	             root, MPI_COMM_WORLD, info)
      
-     ! end the time measurement
-     t2 = MPI_Wtime()
-     ! time for each process
-     delta_t = t2 - t1
+
 
      ! add the time
-    !call MPI_Reduce(delta_t, wall_time, 1, MPI_DOUBLE_PRECISION, MPI_SUM, &
-    ! 	             root, MPI_COMM_WORLD, info)
+    call MPI_Reduce(delta_t, total_time, 1, MPI_DOUBLE_PRECISION, MPI_SUM, &
+     	             root, MPI_COMM_WORLD, info)
+
+
+    ! barrier to ensure that all processes finish executing
+    ! and the correct time is reported by rank0.
+    call MPI_Barrier(MPI_COMM_WORLD,ierror) 
 
     ! calculate pi
     if (rank .eq. 0) then
 
         ! calculate pi
         pi = real(4)*real(n_in)/real(n_total)
-        print*,'Rank= ', rank, 'N_in= ', n_in
+ !       print*,'Rank= ', rank, 'N_in= ', n_in
+        wall_time = total_time/size
         print*,'Rank= ', rank, 'PI= ', pi 
-        print*,'MPI Wall time= ', delta_t, '[s]'
+        print*,'MPI Wall time= ', wall_time, '[s]'
+        
+        ! generate the save file name
+        write(filename, '(A)') 'output.dat' 
+        open(10, file=filename, position='append')
+        write(10, *) size, wall_time, pi
+        close(10)
+        call flush(10) 
     endif
-
-    
-    print*,'Nproc= ', size
-    print*,'Rank= ', rank,'n_total= ', n_total
-    print*,'Rank= ', rank,'n_end= ', n_end
-    print*,'Rank= ', rank,'n_circle= ', n_circle  
+     
+!    print*,'Nproc= ', size
+!    print*,'Rank= ', rank,'n_total= ', n_total
+!    print*,'Rank= ', rank,'n_end= ', n_end
+!    print*,'Rank= ', rank,'n_circle= ', n_circle  
 
     !print*, 'seed: ', seed ! debug
     !print*, 'seedsize: ', seedsize !debug
