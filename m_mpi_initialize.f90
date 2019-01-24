@@ -1,5 +1,6 @@
 module mod_mpi_initialize
     use mod_global, only:mk
+    !include 'mpif.h'
 
     contains
         subroutine mpi_initialize(rank, size, name, ierror)
