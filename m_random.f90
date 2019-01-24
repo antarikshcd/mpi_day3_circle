@@ -5,7 +5,7 @@ module mod_random
         subroutine gen_random(square_x, square_y, rank)
         	implicit none
         	real(mk), dimension(:) :: square_x, square_y
-        	integer :: rank    
+        	integer(mk) :: rank    
 
         	! random number generator
 

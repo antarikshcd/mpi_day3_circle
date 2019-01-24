@@ -6,10 +6,13 @@ program main
     use mod_alloc, only: alloc
     use mod_init
     use mod_random
+    use mod_mpi_initialize
     implicit none
     
+    ! initialize mpi
+    call mpi_initialize(rank, size, name, ierror)
 
-    call initialize(rank, radius, side, n_total, n_circle, x_c, y_c)
+    call initialize(radius, side, n_total, n_circle, x_c, y_c)
     ! allocate the areas of square and circle
     !allocate(area_circle(n_total, n_total), status=info)
     
@@ -36,9 +39,9 @@ program main
     ! calculate pi
     pi = real(4)*real(n_circle)/real(n_total)
 
-    print*,'PI= ', pi 
-    print*,'n_total= ', n_total
-    print*,'n_circle= ', n_circle  
+    print*,'Rank= ', rank, 'PI= ', pi 
+    print*,'Rank= ', rank,'n_total= ', n_total
+    print*,'Rank= ', rank,'n_circle= ', n_circle  
 
     !print*, 'seed: ', seed ! debug
     !print*, 'seedsize: ', seedsize !debug
@@ -46,5 +49,6 @@ program main
     !print*, square(1, :) !debug
     !print*, square(2, :) !debug
 
-
+     ! terminate MPI
+    call MPI_Finalize(ierror)
 end program main

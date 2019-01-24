@@ -9,5 +9,8 @@ module mod_global
     real(mk) :: pi, dist_sq
     integer(mk) :: n_total, n_circle ! total points place within the square
     integer :: i, info, seedsize
-    integer :: rank
+!    integer :: rank
+    integer(mk) :: rank, size, ilen, ierror
+    character(len=256) :: name
+
 end module mod_global

@@ -60,6 +60,7 @@ all: $(TARGET)
 #  before m_init and before diffuse2
 #----------------------------------------------------------------------
 OBJS =	m_global.o\
+        m_mpi_initialize.o\
         m_alloc.o\
         m_init.o\
         m_random.o\
@@ -76,6 +77,8 @@ m_random.o: m_random.f90 m_global.o m_alloc.o m_init.o
 	$(F77) $(FFLAGS)  -c m_random.f90	
 m_init.o: m_init.f90 m_global.o m_alloc.o 
 	$(F77) $(FFLAGS)  -c m_init.f90
+m_mpi_initialize.o: m_mpi_initialize.f90 m_global.o 
+	$(F77) $(FFLAGS)  -c m_mpi_initialize.f90	
 m_alloc.o: m_alloc.f90 m_global.o 
 	$(F77) $(FFLAGS)  -c m_alloc.f90
 m_global.o: m_global.f90 
