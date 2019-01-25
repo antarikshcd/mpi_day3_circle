@@ -10,7 +10,11 @@ module mod_random
         	! random number generator
 
             call random_seed(size=seedsize)
-            allocate(seed(seedsize))
+
+            if (.not.allocated(seed)) then
+                allocate(seed(seedsize))
+            endif
+            
             do i=1,seedsize
     	        seed(i) = 1238239 + rank*8365
             enddo
