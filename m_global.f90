@@ -3,7 +3,8 @@ module mod_global
 	integer, parameter :: mkd = kind(1.0D0)
 	integer, parameter :: mks = kind(1.0E0)
 	integer, parameter :: mk = mkd
-	real(mk), parameter :: pi_th = 3.1415926535897932 ! machine precision ie 16 decimal places
+	!real(mk), parameter :: pi_th = 3.1415926535897932 ! machine precision ie 16 decimal places
+    real(mk), parameter :: pi_th = acos(-1.0_mk) ! machine precision ie 16 decimal places
     real(mk), dimension(:), allocatable :: square_x, square_y
     integer, dimension(:), allocatable :: seed
     real(mk) :: radius, side, x_c, y_c, circle ! (x_c,y_c) center points of circle

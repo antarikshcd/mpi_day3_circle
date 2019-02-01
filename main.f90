@@ -20,12 +20,14 @@ program main
     
     ! divide the checking onto processes
     ! if rank is the last process find the remainder 
- 
+
+
     do while(pi_diff > pi_tol .and. k < kmax)
 
         ! initialize n_in and n_circle
-        n_in = 0
+
         n_circle = 0
+        n_in = 0
     
         ! distribute the points to the processes
         if (rank .ne. size-1) then
@@ -78,7 +80,7 @@ program main
 
         if (rank .eq. root) then
             ! calculate pi for all processes
-            pi = real(4)*real(n_in)/real(n_total)
+            pi = real(4_mk)*real(n_in, mk)/real(n_total, mk)
             ! calcualte the difference
             pi_diff = abs(pi - pi_th)
             ! if pi_diff is less than theoretical increase n
